@@ -11,10 +11,19 @@ const fetchData = async (searchTerm) => {
 
 const input = document.querySelector('input');
 
-let timeoutId;
 const onInput = async event => {
-  const movie = await fetchData(event.target.value);// because this fetch data is an asyncronous
-  console.log(movie);
+  const movies = await fetchData(event.target.value);// because this fetch data is an asyncronous
+
+  for (let movie of movies){
+    const div = document.createElement('div');
+
+    div.innerHTML = `
+      <img src = "${movie.Poster}"/>
+      <h1>${movie.Title}</h1>
+    `;
+
+    document.querySelector('#target').appendChild(div);
+  }
 };
 
 input.addEventListener('input', debounce(onInput, 500)) 
