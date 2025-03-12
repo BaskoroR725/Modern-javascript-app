@@ -6,26 +6,15 @@ const fetchData = async (searchTerm) => {
     }
   });
 
-  console.log(response.data)
+  return response.data.Search;
 };
 
 const input = document.querySelector('input');
 
-const debounce = (func, delay = 1000) =>{
-  let timeoutId;
-  return (...args) => {
-    if (timeoutId){
-      clearTimeout(timeoutId);
-    }
-    timeoutId = setTimeout(()=> {
-      func.apply(null, args);
-    }, delay)
-  }
-}
-
 let timeoutId;
-const onInput = event => {
-  fetchData(event.target.value);
+const onInput = async event => {
+  const movie = await fetchData(event.target.value);// because this fetch data is an asyncronous
+  console.log(movie);
 };
 
 input.addEventListener('input', debounce(onInput, 500)) 
