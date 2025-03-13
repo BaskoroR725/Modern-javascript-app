@@ -31,15 +31,17 @@ const resultsWrapper = document.querySelector('.results')
 const onInput = async event => {
   const movies = await fetchData(event.target.value);// because this fetch data is an asyncronous
 
+  dropdown.classList.add('is-active');
   for (let movie of movies){
-    const div = document.createElement('div');
+    const option = document.createElement('a');
 
-    div.innerHTML = `
+    option.classList.add('dropdown-item')
+    option.innerHTML = `
       <img src = "${movie.Poster}"/>
-      <h1>${movie.Title}</h1>
+      ${movie.Title}
     `;
 
-    document.querySelector('#target').appendChild(div);
+    resultsWrapper.appendChild(option);// insert to results div
   }
 };
 
