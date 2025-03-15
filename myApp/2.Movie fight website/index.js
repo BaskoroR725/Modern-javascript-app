@@ -15,13 +15,14 @@ const fetchData = async (searchTerm) => {
 };
 
 createAutocomplete({
-  root: document.querySelector('.autocomplete')
-});
-createAutocomplete({
-  root: document.querySelector('.autocomplete-two')
-});
-createAutocomplete({
-  root: document.querySelector('.autocomplete-three')
+  root: document.querySelector('.autocomplete'),
+  renderOption(movie) {
+    const imgSrc = movie.Poster === "N/A" ? '' : movie.Poster;
+    return `
+        <img src = "${imgSrc}"/>
+        ${movie.Title} (${movie.Year})
+      `;
+  }
 });
 
 //helper func if user select movie from dropdown
