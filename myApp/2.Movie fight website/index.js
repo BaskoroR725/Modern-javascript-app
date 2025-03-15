@@ -1,10 +1,4 @@
-/* //fetch data func
-const fetchData = async (searchTerm) => {
-  
-};
- */
-createAutocomplete({
-  root: document.querySelector('.autocomplete'),
+const autoCompleteConfig = {
   renderOption : (movie) => {
     const imgSrc = movie.Poster === "N/A" ? '' : movie.Poster;
     return `
@@ -32,6 +26,16 @@ createAutocomplete({
   
     return response.data.Search;
   }
+}
+
+createAutocomplete({
+  ...autoCompleteConfig,
+  root: document.querySelector('#left-autocomplete')
+});
+
+createAutocomplete({
+  ...autoCompleteConfig,
+  root: document.querySelector('#right-autocomplete')
 });
 
 //helper func if user select movie from dropdown
