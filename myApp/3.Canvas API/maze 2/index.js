@@ -1,5 +1,6 @@
 const { Engine, Render, Runner, World, Bodies } = Matter;
 
+const cells = 3;
 const width = 600;
 const height = 600;
 
@@ -38,17 +39,17 @@ for (let i = 0; i<3; i++){
   }
 }
  */
-const grid = Array(3)//array
+const grid = Array(cells)//array
   .fill(null)
-  .map(() => Array(3).fill(false));//element array
+  .map(() => Array(cells).fill(false));//element array
 
-const verticals = Array(3) //inner array vertical
+const verticals = Array(cells) //inner array vertical
   .fill(null)
-  .map(() => Array(2).fill(false)); //inner element vertical
+  .map(() => Array(cells - 1).fill(false)); //inner element vertical
 
-  const horizontals = Array(2) //inner array horizontal
+  const horizontals = Array(cells - 1) //inner array horizontal
   .fill(null)
-  .map(() => Array(3).fill(false)); //inner element horizontal
+  .map(() => Array(cells).fill(false)); //inner element horizontal
 
 console.log(grid);
 console.log(verticals);
