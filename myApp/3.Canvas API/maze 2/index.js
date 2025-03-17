@@ -27,4 +27,31 @@ const walls = [
 
 World.add(world, walls);
 
+//Maze generation
+
+/* const grid = [];
+
+for (let i = 0; i<3; i++){
+  grid.push([]); // inner grid array
+  for(let j = 0; j<3; j++){
+    grid[i].push(false);
+  }
+}
+ */
+const grid = Array(3)//array
+  .fill(null)
+  .map(() => Array(3).fill(false));//element array
+
+const verticals = Array(3) //inner array vertical
+  .fill(null)
+  .map(() => Array(2).fill(false)); //inner element vertical
+
+  const horizontals = Array(2) //inner array horizontal
+  .fill(null)
+  .map(() => Array(3).fill(false)); //inner element horizontal
+
+console.log(grid);
+console.log(verticals);
+console.log(horizontals);
+
 
