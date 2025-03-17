@@ -30,6 +30,21 @@ World.add(world, walls);
 
 //Maze generation
 
+const shuffle = (arr) =>{
+  let counter = arr.length;
+
+  while (counter > 0) {
+    const index = Math.floor(Math.random() * counter);
+
+    counter --;
+    //swapping element
+    const temp = arr[counter];
+    arr[counter ] = arr[index];
+    arr[index] = temp
+  }
+  return arr;
+}
+
 /* const grid = [];
 
 for (let i = 0; i<3; i++){
@@ -51,8 +66,47 @@ const verticals = Array(cells) //inner array vertical
   .fill(null)
   .map(() => Array(cells).fill(false)); //inner element horizontal
 
-console.log(grid);
-console.log(verticals);
-console.log(horizontals);
+const startRow = Math.floor(Math.random() * cells);
+const startColumn = Math.floor(Math.random() * cells);
+
+const stepThroughCells = (row, column) =>{
+  //if marking visited
+  if (grid[row][column]){ // menghubungkan nilai di grid(false) ke nilai koordinat dari start row dan column
+    return;
+  }
+  //mark this cell, Saat koordinat bergabung dengan nilai grid(false), Mengubah nilai cell jadi true
+  gird[row][column] = true; 
+  // contoh return [F,F,T],[T,F,F] dan lain lain.
+
+  //assemble randomly ordered list of neighbor
+  const neighbors = shuffle([
+    [row - 1 , column, 'up'],
+    [row, column + 1, 'right' ],
+    [row + 1, column, 'down' ],
+    [row, column - 1, 'left' ]
+  ]);
+  //for each neighbors...
+  for(let neighbor of neighbors){
+    const [nextRow, nextColumn, direction] = neighbor;
+    
+    //see if that neighbor is out of bounds 
+    if(nextRow < 0 || nextRow >= cells || nextColumn < 0 || nextColumn >= cells){
+      continue; // skip this from loop(not stopping it), sesuai fungsinya hanya sebagai pembatas 
+    }
+    //if we have visited that neighbor , contibue to the next neighbor
+    if (grid[nextRow][nextColumn]){
+      continue;
+    }
+
+    //remove a wall from either horizontal or vertical
+
+
+  }
+
+
+}
+
+
+stepThroughCells(startRow, startColumn);
 
 
