@@ -75,7 +75,7 @@ const stepThroughCells = (row, column) =>{
     return;
   }
   //mark this cell, Saat koordinat bergabung dengan nilai grid(false), Mengubah nilai cell jadi true
-  gird[row][column] = true; 
+  grid[row][column] = true; 
   // contoh return [F,F,T],[T,F,F] dan lain lain.
 
   //assemble randomly ordered list of neighbor
@@ -99,7 +99,11 @@ const stepThroughCells = (row, column) =>{
     }
 
     //remove a wall from either horizontal or vertical
-
+    if (direction === 'left'){
+      verticals[row][column - 1] = true;
+    } else if (direction === 'right') {
+      verticals[row][column] = true
+    }
 
   }
 
@@ -107,6 +111,7 @@ const stepThroughCells = (row, column) =>{
 }
 
 
-stepThroughCells(startRow, startColumn);
+stepThroughCells(1, 1);
+
 
 
