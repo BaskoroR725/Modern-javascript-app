@@ -148,6 +148,7 @@ const stepThroughCells = (row, column) =>{
       })
     });
 
+    //goal
     const goal = Bodies.rectangle(
       width - unitLength / 2,
       height - unitLength / 2,
@@ -159,6 +160,13 @@ const stepThroughCells = (row, column) =>{
     );
     World.add(world, goal);
 
+    //Ball 
+    const ball = Bodies.circle(
+      unitLength / 2,
+      unitLength / 2,
+      unitLength / 4
+    );
+    World.add(world, ball);
   }
 
 
