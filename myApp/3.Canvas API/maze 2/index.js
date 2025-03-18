@@ -22,10 +22,10 @@ Runner.run(Runner.create(), engine);
 
 //walls canvas (position X, position Y, width shape X, height shape Y)
 const walls = [
-  Bodies.rectangle(width / 2, 0, width, 40, { isStatic: true }),//x axis
-  Bodies.rectangle(width / 2, height, width, 40, { isStatic: true }),//x
-  Bodies.rectangle(0, height / 2, 40, height, { isStatic: true }),//y
-  Bodies.rectangle(width, height / 2, 40, height, { isStatic: true })//y axis
+  Bodies.rectangle(width / 2, 0, width, 2, { isStatic: true }),//x axis
+  Bodies.rectangle(width / 2, height, width, 2, { isStatic: true }),//x
+  Bodies.rectangle(0, height / 2, 2, height, { isStatic: true }),//y
+  Bodies.rectangle(width, height / 2, 2, height, { isStatic: true })//y axis
 ];
 
 World.add(world, walls);
@@ -147,6 +147,17 @@ const stepThroughCells = (row, column) =>{
         World.add(world, wall);
       })
     });
+
+    const goal = Bodies.rectangle(
+      width - unitLength / 2,
+      height - unitLength / 2,
+      unitLength * .7,
+      unitLength * .7,
+      {
+        isStatic : true
+      }
+    );
+    World.add(world, goal);
 
   }
 
