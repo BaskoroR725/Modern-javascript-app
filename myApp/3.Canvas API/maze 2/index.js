@@ -1,7 +1,7 @@
 const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 
-const cellsHorizontal = 4;
-const cellsVertical = 3;
+const cellsHorizontal = 14;
+const cellsVertical = 10;
 const width = window.innerWidth;
 const height = window.innerHeight;
 
@@ -15,7 +15,7 @@ const render = Render.create({
   element: document.body,
   engine: engine,
   options: {
-    wireframes: true, //make item shape solid and add random color
+    wireframes: false, //make item shape solid and add random color
     width,
     height
   }
@@ -59,20 +59,20 @@ for (let i = 0; i<3; i++){
   }
 }
  */
-const grid = Array(cells)//array
+const grid = Array(cellsVertical)//array
   .fill(null)
-  .map(() => Array(cells).fill(false));//element array
+  .map(() => Array(cellsHorizontal).fill(false));//element array
 
-const verticals = Array(cells) //inner array vertical
+const verticals = Array(cellsVertical) //inner array vertical
   .fill(null)
-  .map(() => Array(cells - 1).fill(false)); //inner element vertical
+  .map(() => Array(cellsHorizontal - 1).fill(false)); //inner element vertical
 
-  const horizontals = Array(cells - 1) //inner array horizontal
+  const horizontals = Array(cellsVertical - 1) //inner array horizontal
   .fill(null)
-  .map(() => Array(cells).fill(false)); //inner element horizontal
+  .map(() => Array(cellsHorizontal).fill(false)); //inner element horizontal
 
-const startRow = Math.floor(Math.random() * cells);
-const startColumn = Math.floor(Math.random() * cells);
+const startRow = Math.floor(Math.random() * cellsVertical);
+const startColumn = Math.floor(Math.random() * cellsHorizontal);
 
 const stepThroughCells = (row, column) =>{
   //if marking visited
@@ -95,8 +95,13 @@ const stepThroughCells = (row, column) =>{
     const [nextRow, nextColumn, direction] = neighbor;
     
     //see if that neighbor is out of bounds 
-    if(nextRow < 0 || nextRow >= cells || nextColumn < 0 || nextColumn >= cells){
-      continue; // skip this from loop(not stopping it), sesuai fungsinya hanya sebagai pembatas 
+    if(
+      nextRow < 0 ||
+      nextRow >= cellsVertical ||
+      nextColumn < 0 || 
+      nextColumn >= cellsHorizontal
+    ){
+        continue; // skip this from loop(not stopping it), sesuai fungsinya hanya sebagai pembatas 
     }
     //if we have visited that neighbor , contibue to the next neighbor
     if (grid[nextRow][nextColumn]){
@@ -127,12 +132,15 @@ horizontals.forEach((row, rowIndex) =>{
     }
 
     const wall = Bodies.rectangle(
-      columnIndex * unitLength + unitLength / 2,
-      rowIndex * unitLength + unitLength,
-      unitLength,
+      columnIndex * unitLengthX + unitLengthX / 2,
+      rowIndex * unitLengthY + unitLengthY,
+      unitLengthX,
       5,{
         label : 'wall',
-        isStatic : true
+        isStatic : true,
+        render: {
+          fillStyle: 'yellow'
+        }
       }
     );
     World.add(world, wall);
@@ -145,12 +153,15 @@ verticals.forEach((row, rowIndex) =>{
       return;
     }
     const wall = Bodies.rectangle(
-      columnIndex * unitLength + unitLength,
-      rowIndex * unitLength + unitLength / 2,
+      columnIndex * unitLengthX + unitLengthX,
+      rowIndex * unitLengthY + unitLengthY / 2,
       5,
-      unitLength,{
+      unitLengthY,{
         label : 'wall',
-        isStatic: true
+        isStatic: true,
+        render: {
+          fillStyle: 'yellow'
+        }
       }
     );
     World.add(world, wall);
@@ -159,23 +170,30 @@ verticals.forEach((row, rowIndex) =>{
 
 //goal
 const goal = Bodies.rectangle(
-  width - unitLength / 2,
-  height - unitLength / 2,
-  unitLength * .7,
-  unitLength * .7,
+  width - unitLengthX / 2,
+  height - unitLengthY / 2,
+  unitLengthX * .7,
+  unitLengthY * .7,
   {
     label: 'goal',
-    isStatic : true
+    isStatic : true,
+    render: {
+      fillStyle: 'green'
+    }
   }
 );
 World.add(world, goal);
 
 //Ball 
+const ballRadius = Math.min(unitLengthX, unitLengthY) / 4;
 const ball = Bodies.circle(
-  unitLength / 2,
-  unitLength / 2,
-  unitLength / 4,{
-    label: 'ball'
+  unitLengthX / 2,
+  unitLengthY / 2,
+  ballRadius,{
+    label: 'ball',
+    render: {
+      fillStyle: 'skyBlue'
+    }
   }
 );
 World.add(world, ball)
