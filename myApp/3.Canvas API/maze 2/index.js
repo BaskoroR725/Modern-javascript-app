@@ -224,6 +224,7 @@ Events.on(engine, 'collisionStart', event => {
       labels.includes(collision.bodyA.label) &&
       labels.includes(collision.bodyB.label)
     ){
+      docum
       world.gravity.y = 1;
       world.bodies.forEach(body =>{
         if (body.label === 'wall'){
