@@ -200,7 +200,9 @@ World.add(world, ball)
 
 //Keydown event
 document.addEventListener('keydown',event => {
+  Body.setVelocity(ball, { x: 0, y: 0});
   const {x, y} =ball.velocity;
+  Body.setVelocity(ball, { x: 5, y: 5});
 
   if (event.code === 'KeyW' || event.code === "ArrowUp" ){
     Body.setVelocity(ball, {x, y: y - 5});
@@ -224,7 +226,7 @@ Events.on(engine, 'collisionStart', event => {
       labels.includes(collision.bodyA.label) &&
       labels.includes(collision.bodyB.label)
     ){
-      docum
+      document.querySelector('.winner').classList.remove('hidden')
       world.gravity.y = 1;
       world.bodies.forEach(body =>{
         if (body.label === 'wall'){
