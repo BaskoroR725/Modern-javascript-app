@@ -1,6 +1,9 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app  = express();
+
+app.use(bodyParser.urlencoded({ extended:true }));
 
 app.get('/', (req, res) =>{
   res.send(`
@@ -15,7 +18,7 @@ app.get('/', (req, res) =>{
     `);
 });
 
-//Middleware
+/* //Middleware
 const bodyParser = (req,res,next) =>{
   if (req.method === 'POST'){
     req.on('data', data =>{
@@ -31,9 +34,9 @@ const bodyParser = (req,res,next) =>{
   } else {
     next();
   }
-}
+} */
 
-app.post('/', bodyParser, (req,res) =>{
+app.post('/', (req,res) =>{
   console.log(req.body);
   res.send('Account created!!!');
 });
