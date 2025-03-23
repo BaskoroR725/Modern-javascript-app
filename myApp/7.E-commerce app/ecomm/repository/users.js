@@ -12,18 +12,31 @@ class usersRepository{
       fs.writeFileSync(this.filename, '[]');
     }
   }
+
   async getAll(){
-    const contents = await fs.promises.readFile(this.filename, { 
-      encoding : 'utf8'
-    });
+    return JSON.parse(
+      await fs.promises.readFile(this.filename, { 
+        encoding : 'utf8'
+      })
+    );
+  }
 
-    console.log(contents);
+  async create(attrs){
+    const records = await this.getAll();
+    records.push(attrs);
 
+    await fs.promises.writeFile(this.filename, JSON.stringify(records))
   }
 }
 
 const test = async() =>{
   const repo = new usersRepository('users.json');
 
-  await repo.getAll();
+  await repo.create({ email: 'test@test.com}', password:'test'})
+
+  const users =  await repo.getAll();
+
+  console.log(users);
 }
+
+test();
