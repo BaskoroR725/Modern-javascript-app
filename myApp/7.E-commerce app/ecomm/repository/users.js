@@ -64,6 +64,24 @@ class usersRepository{
     await this.writeAll(records);
   }
 
+  async getOneBy(filters){
+    const records = await this.getAll();
+
+    for(let record of records){
+      let found = true;
+
+      //jika key di array tidak sama dengan filters(input)
+      for (let key in filters){
+        if (record[key] !== filters[key] )
+          found = false;
+      }
+
+      if (found){
+        return record;
+      }
+    }
+  }
+
 }
 
 const test = async() =>{
@@ -73,10 +91,15 @@ const test = async() =>{
 
   const users =  await repo.getAll(); */
 
-  const user = await repo.getOne('3cf850df');
+  /*  const user = await repo.getOne('3cf850df');
 
-  await repo.update('3cf850df', { password: 'myPassword'});
+  await repo.update('3cf850df', { password: 'myPassword'}); */
 
+  const user = await repo.getOneBy({
+    id: '3cf850df',
+    email: "test@test.com}"
+  });
+  
   console.log(user);
 }
 
