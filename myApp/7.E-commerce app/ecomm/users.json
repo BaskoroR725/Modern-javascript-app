@@ -8,5 +8,10 @@
     "email": "test2@gmail.com",
     "password": "12345",
     "id": "42b2cfe4"
+  },
+  {
+    "email": "test3@gmail.com",
+    "password": "91c47450bce9a23de5729a5f58be414f1071e08b6d96fee4b37650e2128151dd1fffabcdd65cc324eccf46940557813378baa3f66cd91d9b22e8b954c3fcc95f.ed0bfa762e4e9834",
+    "id": "10e17447"
   }
 ]
