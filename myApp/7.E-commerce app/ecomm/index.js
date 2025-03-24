@@ -61,8 +61,23 @@ app.get('/signin', (req, res) =>{
     `);
 });
 
-app.post('/signin', (req, res) =>{
-  
+app.post('/signin', async (req, res) =>{
+  const { email, password } = req.body;
+
+  const user = await usersRepo.getOneBy({ email });
+
+  if (!user){
+    return res.send('Invalid Email');
+  }
+
+  if(user.password !== password){
+    return res.send('Invalid Password')
+  }
+
+  //if email, password valid run this session
+  req.session.userId = user.id;
+
+  res.send('You are Sign in');
 });
 
 app.listen(3000, () =>{
