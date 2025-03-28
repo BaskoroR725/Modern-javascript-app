@@ -6,6 +6,15 @@ const Repository = require('./repository');
 const scrypt = util.promisify(crypto.scrypt);
 
 class usersRepository extends Repository{
+  async comparePassword(saved, supplied){
+    // Saved  => password saved in our database. 'hashed.salt
+    // Supplied => password given to us by a user trying sign in
+    const [ hashed, salt ] = saved.split('.');
+    const hashedSuppliedBuf = await scrypt(supplied, salt, 64);
+
+    return hashed === hashedSuppliedBuf.toString('hex');
+  }
+  
   async create(attrs){
     attrs.id = this.randomId();
 
@@ -24,14 +33,7 @@ class usersRepository extends Repository{
     return record;
   }
 
-  async comparePassword(saved, supplied){
-    // Saved  => password saved in our database. 'hashed.salt
-    // Supplied => password given to us by a user trying sign in
-    const [ hashed, salt ] = saved.split('.');
-    const hashedSuppliedBuf = await scrypt(supplied, salt, 64);
-
-    return hashed === hashedSuppliedBuf.toString('hex');
-  }
+  
 }
 
 module.exports = new usersRepository('users.json');

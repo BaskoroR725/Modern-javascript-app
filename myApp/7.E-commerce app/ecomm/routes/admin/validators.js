@@ -4,16 +4,18 @@ const usersRepo = require('../../repository/users');
 module.exports = {
   requireTitle: check('title')
     .trim()
-    .isLength({ min: 5, max: 40 }),
-  requirePrice : check('price')
+    .isLength({ min: 5, max: 40 })
+    .withMessage('Must be between 5 and 40 character'),
+  requirePrice: check('price')
     .trim()
     .toFloat()
-    .isFloat({ min: 1 })  
-  ,
-  requireEmail : check('email')
+    .isFloat({ min: 1 })
+    .withMessage('Must be a number greater than 1'),  
+  requireEmail: check('email')
     .trim()
     .normalizeEmail()
     .isEmail()
+    .withMessage('Must be a valid email')
     .custom(async (email) =>{
       const existingUser = await usersRepo.getOneBy({ email });
 
@@ -21,11 +23,11 @@ module.exports = {
           throw new Error('Email in use');
         }
       }),
-  requirePassword : check('password')
+  requirePassword: check('password')
     .trim()
     .isLength({ min: 4, max: 20 })
     .withMessage('Must be between 4 and 20 characters'),
-  requirePasswordConfirmation : check('passwordConfirmation')
+  requirePasswordConfirmation: check('passwordConfirmation')
     .trim()
     .isLength({ min: 4, max: 20 })
     .withMessage('Must be between 4 and 20 characters')

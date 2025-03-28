@@ -1,7 +1,7 @@
 const fs = require('fs');
 const crypto = require('crypto');
 
-module.exports = class repository{
+module.exports = class Repository{
   constructor(filename){
     if(!filename){
       throw new Error('There is a error happen');
