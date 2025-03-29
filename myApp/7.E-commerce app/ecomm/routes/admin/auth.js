@@ -32,7 +32,7 @@ router.post('/signup', [
 
   req.session.userId = user.id;
 
-  res.send('Account created!!!');
+  res.redirect('/admin/products');
 });
 
 //SignOut
@@ -60,7 +60,7 @@ async (req, res) =>{
   //if email, password valid run this session
   req.session.userId = user.id;
 
-  res.send('You are Sign in');
+  res.redirect('/admin/products');
 });
 
 module.exports = router;
