@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "title": "testproduct",
+    "price": "12",
+    "image": "image.jpg",
+    "id" : "1"
+  },
+  {
+    "title": "testproduct2",
+    "price": "10",
+    "image": "image.jpg",
+    "id" : "2"
+  }
+]
