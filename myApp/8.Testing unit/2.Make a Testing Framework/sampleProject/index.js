@@ -4,4 +4,4 @@ module.exports = {
       fn(element);
     }
   }
-}
+};
