@@ -1,5 +1,6 @@
 const fs = require('fs');
-const path = reqquire('path');
+const path = require('path');
+const chalk = require('chalk');
 
 class Runner{
   constructor(){
@@ -8,7 +9,7 @@ class Runner{
 
   async runTests(){
     for (let file of this.testFiles){
-      for (let file of this.testFiles){
+      console.log(chalk.grey(`---- ${file.shortName}`))
         const beforeEaches = [];
         global.beforeEach = (fn) =>{
           beforeEaches.push(fn);
@@ -17,22 +18,21 @@ class Runner{
           beforeEaches.forEach(func => func());
           try{
             fn();
-            console.log(`OK - ${desc}`)
+            console.log(chalk.green(`\tOK - ${desc}`));
           } catch(err) {
-            console.log(`X - ${desc}`);
-            console.log('\t', err.message);
+            const message = err.message.replace(/\n/g, '\n\t\t');
+            console.log(chalk.red(`\tX - ${desc}`));
+            console.log(chalk.red('\t', err.message));
           }
         };
         try{
           require(file.name);
         } catch (err){
           console.log('X - Error loading file');
-          console.log(err);
+          console.log(chalk.red(err));
         }
       };
-
     }
-  }
 
   async collectFiles(targetedPath){
     const files = await fs.promises.readdir(targetedPath);
@@ -42,7 +42,7 @@ class Runner{
       const stats = await fs.promises.lstat(filepath);
 
       if (stats.isFile() && file.includes('.test.js')){
-        this.testFiles.push({ name: filepath })
+        this.testFiles.push({ name: filepath, shortName: file })
       } else if (stats.isDirectory()) {
         const childFiles = await fs.promises.readdir(filepath);
 
